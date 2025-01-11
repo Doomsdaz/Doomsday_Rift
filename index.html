@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS # GAMES</title>
+    <style>
+        * {
+
+            margin: 0;
+            padding: 0;
+            font-family: monospace;
+            background-color: #3b3b3b;
+        }
+
+        body {
+            display: flex;
+        }
+
+        #header {
+            display: flex;
+            justify-content: center;
+            background-color: #4d4c4c;
+            color: #ffffff;
+            height: 18vh;
+            width: 100vw;
+            box-shadow: 0 0 2vw white;
+            overflow: hidden;
+        }
+
+        .Text-Form {
+            position: relative;
+            top: 6vh;
+            left: -2vw;
+            border-radius: 1vh;
+            font-size: 4vh;
+            text-align: center;
+            background-color: #4d4c4c;
+            height: 6vh;
+            width: 3vw;
+            transition: skew(10, 20);
+            letter-spacing: 0vw;
+            color: #4d4c4c;
+            text-shadow: 0 0 1vh rgb(255, 254, 254);
+            cursor: default
+        }
+
+
+        /* These are the full charged animation of text... */
+        #f-w {
+            animation: f-w_animate 0.1s 0.1s 1;
+            left: -7vh;
+        }
+
+        @keyframes f-w_animate {
+            from {
+                color: #4d4c4c;
+                top: 6vh;
+                text-shadow: 0 0 1vh rgb(255, 254, 254);
+            }
+
+            to {
+                top: 5vh;
+                color: #4d4c4c;
+                text-shadow: 0 0 0vh rgb(244, 244, 244);
+                box-shadow: 0 0 2vh rgb(252, 251, 251);
+                border-radius: 1vh;
+            }
+        }
+
+        #s-w {
+            left: -6vh;
+            animation: s-w_animate 0.1s 0.2s 1;
+        }
+
+        @keyframes s-w_animate {
+            from {
+                top: 6vh;
+                color: #4d4c4c;
+                text-shadow: 0 0 1vh rgb(255, 255, 255);
+            }
+
+            to {
+                top: 5vh;
+                color: #4d4c4c;
+                text-shadow: 0 0 0vh rgb(244, 244, 244);
+                box-shadow: 0 0 2vh rgb(255, 255, 255);
+                border-radius: 1vh;
+            }
+        }
+
+        #t-w {
+            animation: t-w_animate 1s 0s 1;
+            color: #2e2d2d;
+            left: -5vh;
+        }
+
+        #t-w:hover {
+            box-shadow: none;
+            box-shadow: 0 0 2vh rgb(248, 247, 247);
+        }
+
+        @keyframes t-w_animate {
+            from {
+                top: 9vh;
+                color: #4d4c4c;
+                text-shadow: 0 0 1vh rgb(255, 254, 254);
+            }
+
+            to {
+                top: 7vh;
+                color: #4d4c4c;
+                text-shadow: 0 0 0vh rgb(244, 244, 244);
+                box-shadow: 0 0 2vh rgb(248, 247, 247);
+                border-radius: 1vh;
+            }
+        }
+
+        #fo-w {
+            animation: fo-w_animate 0.1s 0.3s 1;
+            left: -4vh;
+        }
+
+        @keyframes fo-w_animate {
+            from {
+                color: #4d4c4c;
+                text-shadow: 0 0 1vh rgb(255, 254, 254);
+            }
+
+            to {
+                color: #4d4c4c;
+                text-shadow: 0 0 0vh rgb(244, 244, 244);
+                box-shadow: 0 0 2vh rgb(255, 255, 255);
+                border-radius: 1vh;
+                top: 5vh;
+            }
+        }
+
+        #fi-w {
+            animation: fo-w_animate 0.1s 0.4s 1;
+            left: -3vh;
+        }
+
+        @keyframes fi-w_animate {
+            from {
+                top: 6vh;
+                color: #4d4c4c;
+                text-shadow: 0 0 1vh rgb(255, 254, 254);
+            }
+
+            to {
+                top: 5vh;
+                color: #4d4c4c;
+                text-shadow: 0 0 0vh rgb(244, 244, 244);
+                box-shadow: 0 0 2vh rgb(255, 255, 255);
+                border-radius: 1vh;
+            }
+        }
+
+        #si-w {
+            left: -2vh;
+            animation: si-w_animate 0.1s 0.5s 1;
+        }
+
+        @keyframes si-w_animate {
+            from {
+                top: 6vh;
+                color: #4d4c4c;
+                text-shadow: 0 0 1vh rgb(255, 254, 254);
+            }
+
+            to {
+                top: 5vh;
+                color: #4d4c4c;
+                text-shadow: 0 0 0vh rgb(244, 244, 244);
+                box-shadow: 0 0 2vh rgb(255, 255, 255);
+                border-radius: 1vh;
+            }
+        }
+
+        #se-w {
+            animation: se-w_animate 0.1s 0.6s 1;
+            left: -1vh;
+        }
+
+        @keyframes se-w_animate {
+            from {
+                color: #4d4c4c;
+                text-shadow: 0 0 1vh rgb(255, 254, 254);
+            }
+
+            to {
+                color: #4d4c4c;
+                text-shadow: 0 0 0vh rgb(244, 244, 244);
+                box-shadow: 0 0 2vh rgb(255, 255, 255);
+                border-radius: 1vh;
+            }
+        }
+
+        #ei-w {
+            animation: ei-w_animate 0.1s 0.7s 1;
+            left: 0vh;
+        }
+
+        @keyframes ei-w_animate {
+            from {
+                color: #4d4c4c;
+                text-shadow: 0 0 1vh rgb(255, 254, 254);
+            }
+
+            to {
+                color: #4d4c4c;
+                text-shadow: 0 0 0vh rgb(244, 244, 244);
+                box-shadow: 0 0 2vh rgb(255, 255, 255);
+                border-radius: 1vh;
+            }
+        }
+
+
+        .Text-Form:hover {
+            border: -1vw solid rgb(255, 255, 255);
+            box-shadow: 0 0 2vh rgb(255, 255, 255);
+            animation: up 0.7s 0s ease-in-out;
+        }
+
+
+        .Game1 {
+            display: flex;
+            text-decoration: none;
+            color: white;
+            height: 40vh;
+            width: 18vw;
+            position: absolute;
+            top: 27vh;
+            left: 1vw;
+            border: 0vh solid #252525;
+            border-radius: 2vh;
+            box-shadow: 0 1vw 5vh rgba(0, 0, 0, 0.15);
+            box-shadow: 0 0 1vh rgb(109, 109, 109);
+        }
+
+        .Game1:hover {
+            background-color: #5c5c5c;
+            box-shadow: 0 1vw 5vh rgba(0, 0, 0, 0.15);
+        }
+
+        .Snake_INFI {
+            height: 28vh;
+            width: 13vw;
+            position: absolute;
+            top: 5vh;
+            left: 2vw;
+            border: 1vh double white;
+            border-radius: 2vh;
+            filter: drop-shadow(0 0 1vh rgb(235, 234, 234));
+            text-align: end;
+        }
+
+        .Snake_INFI:hover {
+            filter: drop-shadow(0 0 0vh rgb(255, 255, 255));
+        }
+
+        .Snake_INFI-title {
+            position: absolute;
+            top: 62vh;
+            height: 0vw;
+            width: 0vw;
+            left: 6vw;
+            font-family: sans-serif;
+            font-size: 3vh;
+            text-shadow: 0 0 1vh rgb(255, 254, 254);
+            color: #4d4c4c;
+            cursor: default;
+        }
+
+
+
+        .Game2 {
+            display: flex;
+            text-decoration: none;
+            color: white;
+            height: 40vh;
+            width: 18vw;
+            position: absolute;
+            top: 27vh;
+            left: 28vw;
+            border: 0vh solid #252525;
+            border-radius: 2vh;
+            box-shadow: 0 0 1vh rgb(109, 109, 109);
+        }
+
+        .Game2:hover {
+            background-color: #5c5c5c;
+            box-shadow: 0 1vw 5vh rgba(0, 0, 0, 0.15);
+        }
+
+        .Space-Trouble {
+            height: 28vh;
+            width: 13vw;
+            position: absolute;
+            top: 5vh;
+            left: 2vw;
+            border: 1vh double white;
+            border-radius: 2vh;
+            filter: drop-shadow(0 0 1vh rgb(235, 234, 234));
+            text-align: end;
+        }
+
+        .Space-Trouble-title {
+            position: absolute;
+            top: 62vh;
+            height: 0vw;
+            width: 0vw;
+            left: 32vw;
+            font-family: sans-serif;
+            font-size: 3vh;
+            text-shadow: 0 0 1vh rgb(255, 254, 254);
+            color: #4d4c4c;
+            cursor: default;
+        }
+
+        .Space-Trouble:hover {
+            filter: drop-shadow(0 0 0vh rgb(255, 255, 255));
+        }
+
+        .Game3 {
+            display: flex;
+            text-decoration: none;
+            color: white;
+            height: 40vh;
+            width: 18vw;
+            position: absolute;
+            top: 27vh;
+            left: 55vw;
+            border: 0vh solid #252525;
+            border-radius: 2vh;
+            box-shadow: 0 0 1vh rgb(109, 109, 109);
+        }
+
+        .Game4 {
+            display: flex;
+            text-decoration: none;
+            color: white;
+            height: 40vh;
+            width: 18vw;
+            position: absolute;
+            top: 27vh;
+            left: 81vw;
+            border: 0vh solid #252525;
+            border-radius: 2vh;
+            box-shadow: 0 0 1vh rgb(109, 109, 109);
+        }
+
+        .Game3:hover {
+            background-color: #5c5c5c;
+            box-shadow: 0 1vw 5vh rgba(0, 0, 0, 0.15);
+        }
+
+        .Game4:hover {
+            background-color: #5c5c5c;
+            box-shadow: 0 1vw 5vh rgba(0, 0, 0, 0.15);
+        }
+
+        .Calculator {
+            height: 28vh;
+            width: 13vw;
+            position: absolute;
+            top: 5vh;
+            left: 2vw;
+            border: 1vh double white;
+            border-radius: 2vh;
+            filter: drop-shadow(0 0 1vh rgb(235, 234, 234));
+            text-align: end;
+        }
+
+        .Tic-Tac-Toe {
+            height: 28vh;
+            width: 13vw;
+            position: absolute;
+            top: 5vh;
+            left: 2vw;
+            border: 1vh double white;
+            border-radius: 2vh;
+            filter: drop-shadow(0 0 1vh rgb(235, 234, 234));
+            text-align: end;
+        }
+
+        .Tic-Tac-Toe:hover {
+            filter: drop-shadow(0 0 0vh rgb(255, 255, 255));
+        }
+
+        .Tic-Tac-Toe-title {
+            position: absolute;
+            top: 62vh;
+            height: 0vw;
+            width: 0vw;
+            left: 60vw;
+            font-family: sans-serif;
+            font-size: 3vh;
+            text-shadow: 0 0 1vh rgb(255, 254, 254);
+            color: #4d4c4c;
+            cursor: default;
+        }
+
+        .Calculator-title {
+            position: absolute;
+            top: 62vh;
+            height: 0vw;
+            width: 0vw;
+            left: 87vw;
+            font-family: sans-serif;
+            font-size: 3vh;
+            text-shadow: 0 0 1vh rgb(255, 254, 254);
+            color: #4d4c4c;
+            cursor: default;
+        }
+
+        .Calculator:hover {
+            filter: drop-shadow(0 0 0vh rgb(255, 255, 255));
+        }
+
+
+        .wrapper {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="header" class="Main-Header">
+        <h1 id="f-w" class="Text-Form">J</h1>
+        <h1 id="s-w" class="Text-Form">s</h1>
+        <h2 id="t-w" class="Text-Form">#</h2>
+        <h3 id="fo-w" class="Text-Form">G</h3>
+        <h4 id="fi-w" class="Text-Form">a</h4>
+        <h5 id="si-w" class="Text-Form">m</h5>
+        <h6 id="se-w" class="Text-Form">e</h6>
+        <h6 id="ei-w" class="Text-Form">s</h6>
+        <div class="wrapper">
+            <span class="1">
+                <a class="Game1" href="Snake_INFI.html"><img title="Snake_INFI &copy; 2018-Made by Ibrahim fariat"
+                        class="Snake_INFI" src="snakeinfi.jpg" alt=""></a>
+                <h1 class="Snake_INFI-title">Snake_INFI</h1>
+            </span>
+            <span class="2">
+                <a class="Game2" href="Space-Trouble.html"><img title="Space-Trouble 2021-Made by JS#GAMES"
+                        class="Space-Trouble" src="spacewar.jpg" alt=""></a>
+                <h2 class="Space-Trouble-title">Space_Trouble</h2>
+            </span>
+            <span class="3">
+                <a class="Game3" href="Tic-Tac-Toe.html"><img title="Tic-Tac-Toe 2022-Made by [ JS#GAMES ]"
+                        class="Tic-Tac-Toe" src="tictac.jpg" alt=""></a>
+                <h2 class="Tic-Tac-Toe-title">Tic_Tac_Toe</h2>
+            </span>
+            <span class="4">
+                <a class="Game4" href="Calculator.html"><img title="" class="Calculator" src="cal.jpg" alt=""></a>
+                <h2 class="Calculator-title">Calculator</h2>
+            </span>
+        </div>
+    </header>
+
+
+
+</body>
+
+</html>
