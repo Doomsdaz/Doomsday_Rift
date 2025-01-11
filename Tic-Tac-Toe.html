@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe</title>
+    <style>
+        body {
+            font-size: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(#797979, #000000);
+            margin: 0;
+            font-family: Arial, sans-serif;
+            perspective: 1000px;
+            /* Added perspective for 3D effect */
+        }
+
+        .game-container {
+            text-align: center;
+            transform-style: preserve-3d;
+            transform: rotateX(20deg) rotateY(20deg);
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 5px;
+            margin-bottom: 20px;
+            transform-style: preserve-3d;
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(#333333, #6e6e6e, rgb(44, 44, 44));
+            border: 2px solid #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease-in-out;
+            color: rgb(204, 204, 204);
+        }
+
+        .cell:hover {
+            animation: Hover 0.1s 0s 1;
+            background: linear-gradient(rgb(82, 82, 82), rgb(32, 32, 32));
+        }
+
+        @keyframes Hover {
+            from {
+                background: linear-gradient(#333333, #6e6e6e, rgb(44, 44, 44));
+            }
+
+            to {
+                background: linear-gradient(rgb(82, 82, 82), rgb(32, 32, 32));
+                transform: rotateY(180deg);
+            }
+        }
+
+        .message {
+            height: 17vh;
+            width: 19vw;
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #dbdbdb;
+            position: relative;
+            top: -59vh;
+            left: 32vw;
+            font-size: 7vh;
+            font-family: monospace;
+            cursor: default;
+            text-shadow: 0 0 2vh white;
+            border: 1px solid white;
+            background: linear-gradient(#474747, #000);
+        }
+
+        .message:hover {
+
+            background: linear-gradient(#525252, #383838);
+        }
+
+        #restart {
+            font-size: 13px;
+            background: linear-gradient(#474747, #000);
+            padding: 10px 20px;
+            border: none;
+            color: #ffffff;
+            border-radius: 4px;
+            font-weight: 800;
+            cursor: pointer;
+            position: relative;
+            left: 9vw;
+            transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #restart:hover {
+            background: linear-gradient(#525252, #313131);
+        }
+
+        h1 {
+            position: relative;
+            top: -2vw;
+            left: 0vw;
+            border-radius: 1vh;
+            font-size: 6vh;
+            text-align: center;
+            transition: skew(10, 20);
+            letter-spacing: 0vw;
+            color: #4d4c4c;
+            text-shadow: 0 0 1vh rgb(255, 255, 255);
+            cursor: default
+        }
+
+        .Main-WEB {
+            color: white;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            width: 10vw;
+            height: 7vh;
+            text-align: center;
+            background: linear-gradient(#474747, #000);
+            line-height: .3em;
+            display: grid;
+            border-radius: 3px;
+            font-size: 3vh;
+            font-family: monospace;
+            position: relative;
+            top: -7vh;
+            left: 0vw;
+
+        }
+
+        .Main-WEB:hover {
+            background: linear-gradient(#5a5a5a, #141414);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="game-container">
+        <h1>Tic-Tac-Toe</h1>
+        <div class="board">
+            <div class="cell" id="cell-0"></div>
+            <div class="cell" id="cell-1"></div>
+            <div class="cell" id="cell-2"></div>
+            <div class="cell" id="cell-3"></div>
+            <div class="cell" id="cell-4"></div>
+            <div class="cell" id="cell-5"></div>
+            <div class="cell" id="cell-6"></div>
+            <div class="cell" id="cell-7"></div>
+            <div class="cell" id="cell-8"></div>
+        </div>
+        <button id="restart">▶ Restart</button>
+        <a id="canvas" class="Main-WEB" href="Main.html">← Return</a>
+        <div class="message" id="message"></div>
+    </div>
+    <script>
+        const cells = document.querySelectorAll('.cell');
+        const messageElement = document.getElementById('message');
+        const restartButton = document.getElementById('restart');
+        let currentPlayer = 'X';
+        let board = ['', '', '', '', '', '', '', '', ''];
+        let gameActive = true;
+
+        const winningCombinations = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6],
+        ];
+
+        function handleCellClick(event) {
+            const clickedCell = event.target;
+            const clickedCellIndex = Array.from(cells).indexOf(clickedCell);
+
+            if (board[clickedCellIndex] !== '' || !gameActive) {
+                return;
+            }
+
+            updateCell(clickedCell, clickedCellIndex);
+            clickedCell.style.transform = 'rotateY(180deg)';
+            checkResult();
+
+            if (gameActive) {
+                setTimeout(computerMove, 500);
+            }
+        }
+
+        function updateCell(cell, index) {
+            board[index] = currentPlayer;
+            cell.textContent = currentPlayer;
+        }
+
+        function switchPlayer() {
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        }
+
+        function checkResult() {
+            let roundWon = false;
+
+            for (let i = 0; i < winningCombinations.length; i++) {
+                const [a, b, c] = winningCombinations[i];
+                if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+                    roundWon = true;
+                    break;
+                }
+            }
+
+            if (roundWon) {
+                messageElement.textContent = "computer Wins!!";
+                gameActive = false;
+                return;
+            }
+
+            if (!board.includes('')) {
+                messageElement.textContent = "It's a Draw!";
+                gameActive = false;
+                return;
+            }
+
+            switchPlayer();
+        }
+
+        function computerMove() {
+            const bestMove = minimax(board, 'O');
+            updateCell(cells[bestMove.index], bestMove.index);
+            cells[bestMove.index].style.transform = 'rotateY(180deg)';
+            checkResult();
+        }
+
+        function minimax(newBoard, player) {
+            const availSpots = newBoard.map((cell, index) => cell === '' ? index : null).filter(index => index !== null);
+
+            if (checkWin(newBoard, 'X')) {
+                return { score: -10 };
+            } else if (checkWin(newBoard, 'O')) {
+                return { score: 10 };
+            } else if (availSpots.length === 0) {
+                return { score: 0 };
+            }
+
+            const moves = [];
+
+            for (let i = 0; i < availSpots.length; i++) {
+                const move = {};
+                move.index = availSpots[i];
+                newBoard[availSpots[i]] = player;
+
+                if (player === 'O') {
+                    const result = minimax(newBoard, 'X');
+                    move.score = result.score;
+                } else {
+                    const result = minimax(newBoard, 'O');
+                    move.score = result.score;
+                }
+
+                newBoard[availSpots[i]] = '';
+                moves.push(move);
+            }
+
+            let bestMove;
+            if (player === 'O') {
+                let bestScore = -Infinity;
+                for (let i = 0; i < moves.length; i++) {
+                    if (moves[i].score > bestScore) {
+                        bestScore = moves[i].score;
+                        bestMove = i;
+                    }
+                }
+            } else {
+                let bestScore = Infinity;
+                for (let i = 0; i < moves.length; i++) {
+                    if (moves[i].score < bestScore) {
+                        bestScore = moves[i].score;
+                        bestMove = i;
+                    }
+                }
+            }
+
+            return moves[bestMove];
+        }
+
+        function checkWin(board, player) {
+            for (let i = 0; i < winningCombinations.length; i++) {
+                const [a, b, c] = winningCombinations[i];
+                if (board[a] === player && board[b] === player && board[c] === player) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function restartGame() {
+            currentPlayer = 'X';
+            board = ['', '', '', '', '', '', '', '', ''];
+            gameActive = true;
+            cells.forEach(cell => {
+                cell.textContent = '';
+                cell.style.transform = 'rotateY(0deg)';
+            });
+            messageElement.textContent = '';
+        }
+
+        cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+        restartButton.addEventListener('click', restartGame);
+    </script>
+</body>
+
+</html>
